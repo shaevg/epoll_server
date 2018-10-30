@@ -111,6 +111,7 @@ void io_module::handle_events()
 				puts(request);
 			}
 
+//			if (send(_client_socket, _response, strlen(_response), 0) == -1)
 			if (send(_client_socket, request, static_cast<size_t>(byte_count), 0) == -1)
 			{
 				perror("send error");
@@ -119,6 +120,7 @@ void io_module::handle_events()
 				throw 1;
 			}
 			puts(" ******** RESPONSE ******** ");
+//			puts(_response);
 			puts(request);
 
 			close(_client_socket);
