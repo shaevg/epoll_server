@@ -19,7 +19,7 @@ private:
 	static const unsigned int _MAX_BUF = 1024;
 	static const unsigned short int _DEFAULT_PORT = 7000;
 	const char* _response =
-		 "HTTP/1.1 200 OK\nContent-Type: text/xml;charset=utf-8\nContent-Length: 256 \n\n"
+		 "HTTP/1.1 200 OK\nContent-Type: text/xml;charset=utf-8 \n\n"
 		 "<!doctype html>"
 		 "<html lang=\"en\">"
 		 "<head>"

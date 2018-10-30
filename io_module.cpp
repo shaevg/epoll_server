@@ -17,9 +17,8 @@ void io_module::start()
 	{
 		init_server();
 		_state = io_module_state::RUN;
-		start_listen();
-		//_listen_thread = new std::thread(&io_module::start_listen, this);
-		//_handle_thread = new std::thread(&io_module::handle_events, this);
+		_listen_thread = new std::thread(&io_module::start_listen, this);
+		_handle_thread = new std::thread(&io_module::handle_events, this);
 	}
 }
 
@@ -85,7 +84,7 @@ void io_module::init_server()
 
 void io_module::handle_events()
 {
-	//while (_state == io_module_state::RUN)
+	while (_state == io_module_state::RUN)
 	{
 		int ready = epoll_wait(_epoll_fd, _evlist, _MAX_EVENTS, -1);
 		if (ready == -1)
@@ -112,7 +111,7 @@ void io_module::handle_events()
 				puts(request);
 			}
 
-			if (send(_client_socket, _response, sizeof(_response), 0) == -1)
+			if (send(_client_socket, request, static_cast<size_t>(byte_count), 0) == -1)
 			{
 				perror("send error");
 				close(_socket);
@@ -120,7 +119,7 @@ void io_module::handle_events()
 				throw 1;
 			}
 			puts(" ******** RESPONSE ******** ");
-			puts(_response);
+			puts(request);
 
 			close(_client_socket);
 		}
@@ -153,7 +152,5 @@ void io_module::start_listen()
 		_event.events = EPOLLIN;
 
 		epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, _client_socket, &_event);
-
-		handle_events();
 	}
 }
