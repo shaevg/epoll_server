@@ -1,5 +1,15 @@
 #include "io_module.h"
 
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+#include "message.h"
+
 io_module::io_module(unsigned short int port):
 	_socket(0),
 	_epoll_fd(0),
@@ -110,6 +120,8 @@ void io_module::handle_events()
 				puts(" ******** REQUEST ******** ");
 				puts(request);
 			}
+
+			Message msg(request, byte_count);
 
 //			if (send(_client_socket, _response, strlen(_response), 0) == -1)
 			if (send(_client_socket, request, static_cast<size_t>(byte_count), 0) == -1)

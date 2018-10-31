@@ -1,15 +1,8 @@
 #ifndef IO_MODULE_H
 #define IO_MODULE_H
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+
 #include <sys/epoll.h>
 #include <thread>
-#include <mutex>
 
 class io_module
 {
